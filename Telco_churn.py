@@ -72,7 +72,6 @@ pd.set_option('display.width', 500)
 #############################################
 # GÖREV 1: Keşifçi Veri Analizi / Exploratory Data Analysis
 #############################################
-# Değişkenlerin isimlerinin baş harflerini standartlaştır.
 
 def load_customer_churn():
     data = pd.read_csv("C:/Users/Lenovo/PycharmProjects/datasets/TelcoChurn/Telco-Customer-Churn.csv")
@@ -82,7 +81,7 @@ def load_customer_churn():
 df = load_customer_churn()
 df.head()
 
-# Adım 1: Genel resmi inceleyiniz.
+# Adım 1: Genel resmi inceleyiniz. / Overview
 
 
 def df_summary(df):
@@ -108,9 +107,9 @@ df_summary(df)
 
 df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors='coerce')
 df.dtypes
-df['SeniorCitizen'] = df['SeniorCitizen'].astype("object")  # Korelasyon analizinde problem çıkıyor. Bu değişken de geliyor.
+df['SeniorCitizen'] = df['SeniorCitizen'].astype("object")  # Korelasyon analizinde problem çıkıyor. Bu değişken de geliyor o yüzden object yapıldı
 
-# Adım 2: Numerik ve kategorik değişkenleri yakalayınız.
+# Adım 2: Numerik ve kategorik değişkenleri yakalayınız. / Identify the numerical and categorical variables.
 
 def grab_col_names(dataframe, cat_th=10, car_th=20):
     """
@@ -175,9 +174,9 @@ def grab_col_names(dataframe, cat_th=10, car_th=20):
 cat_cols, num_cols, cat_but_car = grab_col_names(df)
 
 
-# Adım 3: Numerik ve kategorik değişkenlerin analizini yapınız.
+# Adım 3: Numerik ve kategorik değişkenlerin analizini yapınız. / Analyze the numerical and categorical variables.
 
-# Kategorik değişken analizi
+# Kategorik değişken analizi / categorical variables
 
 def cat_summary(dataframe, col_name, plot=False):
     print(pd.DataFrame({col_name: dataframe[col_name].value_counts(),
@@ -192,7 +191,7 @@ for col in cat_cols:
     cat_summary(df, col)
 
 
-# Numerik değişken analizi
+# Numerik değişken analizi / numerical variables
 
 def num_summary(dataframe, num_cols, plot=False):
     quantiles = [0.05, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 0.99]
@@ -208,19 +207,20 @@ for col in num_cols:
     num_summary(df, col)
 
 # Adım 4: Hedef değişken analizi yapınız. (Kategorik değişkenlere göre hedef değişkenin ortalaması, hedef değişkene göre
-# numerik değişkenlerin ortalaması)
-cat_cols
+# numerik değişkenlerin ortalaması) / Analyze of the Target variable
+
 df["Churn"].value_counts()
 df["Churn"] = df["Churn"].map({"Yes": 1, "No": 0})
 
-# Churn oranını pasta graği ile görelim
+# Churn oranını pasta graği ile görelim / Let's visualize the target variable.
+
 fig, ax = plt.subplots(figsize = (10,10))
 labels = 'No Churn', 'Churn'
 x = df.groupby('Churn').size().values
 ax.pie(x, autopct='%1.1f%%', labels=labels)
 plt.show()
 
-# Kategorik değişkenlere göre Target analizi
+# Kategorik değişkenlere göre Target analizi / Target analysis by categorical variables
 
 def target_summary_cat(dataframe, target, cat_cols):
     for col in cat_cols:
@@ -231,7 +231,7 @@ def target_summary_cat(dataframe, target, cat_cols):
 
 target_summary_cat(df, "Churn", cat_cols)
 
-# Grafiksel inceleme
+# Grafiksel inceleme / Visualize of the categorical variables
 
 for cat in cat_cols:
     fig, ax = plt.subplots(figsize=(10, 10))
@@ -269,7 +269,7 @@ for cat in cat_cols:
     plt.show()
 
 
-# Numeric değişkenlere göre Target analizi
+# Numeric değişkenlere göre Target analizi / Target analysis by numerical variables
 
 def target_summary_num(dataframe, target, num_cols):
     print(dataframe.groupby(target).agg({num_cols: "mean"}), end="\n\n")
@@ -282,12 +282,11 @@ for col in num_cols:
 df["tenure"].nunique()
 len(df["tenure"].unique())
 
-# Grafiksel inceleme
+# Grafiksel inceleme / Visualize
 for col in num_cols:
     df.groupby('Churn').agg({col:'mean'}).plot(kind='bar', rot = 0,figsize=(16,8))
 plt.show()
 
-"""
 fig, ax = plt.subplots(figsize = (10,10))
 df.tenure[df["Churn"] == "1"].hist(bins=20)
 df.tenure[df["Churn"] == "0"].hist(bins=20, alpha = 0.5)
@@ -298,8 +297,6 @@ plt.ylabel("Count of Customers")
 plt.show(block=True)
 
 # MonthlyCharges
-
-
 fig, ax = plt.subplots(figsize = (10,10))
 df.tenure[df.Churn == "Yes"].hist(bins=20)
 df.tenure[df.Churn == "No"].hist(bins=20, alpha = 0.5)
@@ -317,9 +314,9 @@ plt.legend(["Churn Customers", "Non-Churn Customers"])
 plt.title("Customer Total Charges")
 plt.xlabel("Total Charge Amount")
 plt.ylabel("Count of Customers")
-"""
 
-# Adım 5: Aykırı gözlem analizi yapınız.
+
+# Adım 5: Aykırı gözlem analizi yapınız. / Check the outliers 
 
 def outlier_thresholds(dataframe, col_name, q1=0.05, q3=0.95):
     quartile1 = dataframe[col_name].quantile(q1)
@@ -330,7 +327,7 @@ def outlier_thresholds(dataframe, col_name, q1=0.05, q3=0.95):
     return low_limit, up_limit
 
 
-def check_outlier(dataframe, col_name): # eğer q1 ve q3'ü şekillendirmek istersek buraya girmek zorundayız
+def check_outlier(dataframe, col_name): 
     low_limit, up_limit = outlier_thresholds(dataframe, col_name)
     if dataframe[(dataframe[col_name] > up_limit) | (dataframe[col_name] < low_limit)].any(axis=None):
         return True
@@ -342,9 +339,9 @@ for col in num_cols:
     print(col, check_outlier(df, col))
 
 
-# Adım 6: Eksik gözlem analizi yapınız.
+# Adım 6: Eksik gözlem analizi yapınız. / Check the missing values 
 
-def missing_values_table(dataframe, na_name=False):  #eksik değerlerin isimlerine erişmek istersek True
+def missing_values_table(dataframe, na_name=False): 
     na_columns = [col for col in dataframe.columns if dataframe[col].isnull().sum() > 0]
 
     n_miss = dataframe[na_columns].isnull().sum().sort_values(ascending=False)

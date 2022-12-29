@@ -179,7 +179,7 @@ cat_cols, num_cols, cat_but_car = grab_col_names(df)
 
 # Adım 3: Numerik ve kategorik değişkenlerin analizini yapınız. / Analyze the numerical and categorical variables.
 
-# Kategorik değişken analizi / categorical variables
+# Kategorik değişken analizi / Analysis of Categorical variables
 
 def cat_summary(dataframe, col_name, plot=False):
     print(pd.DataFrame({col_name: dataframe[col_name].value_counts(),
@@ -194,7 +194,7 @@ for col in cat_cols:
     cat_summary(df, col)
 
 
-# Numerik değişken analizi / numerical variables
+# Numerik değişken analizi / Analysis of Numerical variables
 
 def num_summary(dataframe, num_cols, plot=False):
     quantiles = [0.05, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 0.99]

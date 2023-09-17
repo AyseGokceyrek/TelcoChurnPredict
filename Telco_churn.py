@@ -3,13 +3,10 @@
 #############################################
 
 #############################################
-# İş Problemi / Business Problem
+# Business Problem
 #############################################
-# Şirketi terk edecek müşterileri tahmin edebilecek bir makine öğrenmesi modeli geliştirilmesi istenmektedir.
-#  Modeli geliştirmeden önce gerekli olan veri analizi ve özellik mühendisliği adımlarını gerçekleştirmeniz beklenmektedir
-
-# # It is desirable to develop a machine learning model that can predict customers who will leave the company.
-# Before developing the model, the necessary data analysis and feature engineering steps are expected of you.
+# The development of a machine learning model to predict customers who will churn from the company is requested. 
+# Before developing the model, it is expected that data analysis and feature engineering steps be carried out.
 
 #############################################
 # Veri Seti Hikayesi / Dataset Story

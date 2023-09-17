@@ -64,7 +64,7 @@ pd.set_option('display.float_format', lambda x: '%.3f' % x)
 pd.set_option('display.width', 500)
 
 #############################################
-# PROJECT TASKS(PROJE GÖREVLERİ)
+# PROJECT STEPS
 #############################################
 
 #############################################

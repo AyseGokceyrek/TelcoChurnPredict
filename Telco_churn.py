@@ -14,33 +14,31 @@
 #############################################
 # Veri Seti Hikayesi / Dataset Story
 #############################################
-# Telco müşteri kaybı verileri, üçüncü çeyrekte Kaliforniya'daki 7043 müşteriye ev telefonu ve İnternet hizmetleri sağlayan hayali
-# bir telekom şirketi hakkında bilgi içerir. Hangi müşterilerin hizmetlerinden ayrıldığını, kaldığını veya hizmete kaydolduğunu
-# gösterir
-
+# Telco customer churn data contains information about a fictitious telecom company that provides home phone and 
+# internet services to 7043 customers in California during the third quarter. It shows which customers have churned, stayed, or subscribed to the services.
 
 # 21 Değişken 7043 Gözlem 977.5 KB
-# CustomerId: Müşteri İd’si
-# Gender: Cinsiyet
-# SeniorCitizen: Müşterinin yaşlı olup olmadığı (1, 0)
-# Partner: Müşterinin bir ortağı olup olmadığı (Evet, Hayır)
-# Dependents: Müşterinin bakmakla yükümlü olduğu kişiler olup olmadığı (Evet, Hayır)
-# tenure: Müşterinin şirkette kaldığı ay sayısı
-# PhoneService: Müşterinin telefon hizmeti olup olmadığı (Evet, Hayır)
-# MultipleLines: Müşterinin birden fazla hattı olup olmadığı (Evet, Hayır, Telefon hizmeti yok)
-# InternetService: Müşterinin internet servis sağlayıcısı (DSL, Fiber optik, Hayır)
+# CustomerId: A unique ID that identifies each customer
+# Gender: The customer’s gender: Male, Female
+# SeniorCitizen:Indicates if the customer is 65 or older (1, 0)
+# Partner: Indicate if the customer has a partner: Yes, No
+# Dependents: Indicates if the customer lives with any dependents: Yes, No. Dependents could be children, parents, grandparents, etc.
+# tenure:  Indicates the total amount of months that the customer has been with the company by the end of the quarter specified above.
+# PhoneService: Indicates if the customer subscribes to home phone service with the company: Yes, No
+# MultipleLines: Indicates if the customer subscribes to multiple telephone lines with the company: Yes, No
+# InternetService: Indicates if the customer subscribes to Internet service with the company: No, DSL, Fiber Optic, Cable.
 # OnlineSecurity: Müşterinin çevrimiçi güvenliğinin olup olmadığı (Evet, Hayır, İnternet hizmeti yok)
-# OnlineBackup: Müşterinin online yedeğinin olup olmadığı (Evet, Hayır, İnternet hizmeti yok)
-# DeviceProtection: Müşterinin cihaz korumasına sahip olup olmadığı (Evet, Hayır, İnternet hizmeti yok)
-# TechSupport: Müşterinin teknik destek alıp almadığı (Evet, Hayır, İnternet hizmeti yok)
-# StreamingTV: Müşterinin TV yayını olup olmadığı (Evet, Hayır, İnternet hizmeti yok)
-# StreamingMovies: Müşterinin film akışı olup olmadığı (Evet, Hayır, İnternet hizmeti yok)
-# Contract: Müşterinin sözleşme süresi (Aydan aya, Bir yıl, İki yıl)
-# PaperlessBilling: Müşterinin kağıtsız faturası olup olmadığı (Evet, Hayır)
-# PaymentMethod: Müşterinin ödeme yöntemi (Elektronik çek, Posta çeki, Banka havalesi (otomatik), Kredi kartı (otomatik))
-# MonthlyCharges: Müşteriden aylık olarak tahsil edilen tutar
-# TotalCharges: Müşteriden tahsil edilen toplam tutar
-# Churn: Müşterinin kullanıp kullanmadığı (Evet veya Hayır)
+# OnlineBackup: Indicates if the customer subscribes to an additional online backup service provided by the company: Yes, No
+# DeviceProtection: Indicates if the customer subscribes to an additional device protection plan for their Internet equipment provided by the company: Yes, No
+# TechSupport: Indicates if the customer subscribes to an additional technical support plan from the company with reduced wait times: Yes, No
+# StreamingTV: Indicates if the customer uses their Internet service to stream television programing from a third party provider: Yes, No. The company does not charge an additional fee for this service.
+# StreamingMovies: Indicates if the customer uses their Internet service to stream movies from a third party provider: Yes, No. The company does not charge an additional fee for this service.
+# Contract: Indicates the customer’s current contract type: Month-to-Month, One Year, Two Year.
+# PaperlessBilling: Indicates if the customer has chosen paperless billing: Yes, No
+# PaymentMethod: Indicates how the customer pays their bill: Bank Withdrawal, Credit Card, Mailed Check
+# MonthlyCharges: Indicates the customer’s current total monthly charge for all their services from the company.
+# TotalCharges: Indicates the customer’s total charges, calculated to the end of the quarter specified above.
+# Churn: Yes = the customer left the company this quarter. No = the customer remained with the company.
 
 
 import numpy as np
@@ -69,11 +67,11 @@ pd.set_option('display.float_format', lambda x: '%.3f' % x)
 pd.set_option('display.width', 500)
 
 #############################################
-# PROJE GÖREVLERİ / PROJECT TASKS
+# PROJECT TASKS(PROJE GÖREVLERİ)
 #############################################
 
 #############################################
-# GÖREV 1: Keşifçi Veri Analizi / Exploratory Data Analysis
+#Exploratory Data Analysis(Keşifçi Veri Analizi)
 #############################################
 
 def load_customer_churn():
@@ -84,9 +82,7 @@ def load_customer_churn():
 df = load_customer_churn()
 df.head()
 
-# Adım 1: Genel resmi inceleyiniz. / Overview
-
-
+# Overview
 def df_summary(df):
     print("\n" + 20 * "*" + "SHAPE".center(20) + 20 * "*")
     print("\n")
@@ -112,7 +108,7 @@ df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors='coerce')
 df.dtypes
 df['SeniorCitizen'] = df['SeniorCitizen'].astype("object")  # Korelasyon analizinde problem çıkıyor. Bu değişken de geliyor o yüzden object yapıldı
 
-# Adım 2: Numerik ve kategorik değişkenleri yakalayınız. / Identify the numerical and categorical variables.
+# Numerik ve kategorik değişkenleri yakalayınız. / Identify the numerical and categorical variables.
 
 def grab_col_names(dataframe, cat_th=10, car_th=20):
     """
@@ -177,7 +173,7 @@ def grab_col_names(dataframe, cat_th=10, car_th=20):
 cat_cols, num_cols, cat_but_car = grab_col_names(df)
 
 
-# Adım 3: Numerik ve kategorik değişkenlerin analizini yapınız. / Analyze the numerical and categorical variables.
+# Analyze the numerical and categorical variables.
 
 # Kategorik değişken analizi / Analysis of Categorical variables
 
@@ -209,7 +205,7 @@ def num_summary(dataframe, num_cols, plot=False):
 for col in num_cols:
     num_summary(df, col)
 
-# Adım 4: Hedef değişken analizi yapınız. (Kategorik değişkenlere göre hedef değişkenin ortalaması, hedef değişkene göre
+# Hedef değişken analizi yapınız. (Kategorik değişkenlere göre hedef değişkenin ortalaması, hedef değişkene göre
 # numerik değişkenlerin ortalaması) / Analyze of the Target variable
 
 df["Churn"].value_counts()
@@ -319,7 +315,7 @@ plt.xlabel("Total Charge Amount")
 plt.ylabel("Count of Customers")
 
 
-# Adım 5: Aykırı gözlem analizi yapınız. / Check the outliers 
+# Check the outliers 
 
 def outlier_thresholds(dataframe, col_name, q1=0.05, q3=0.95):
     quartile1 = dataframe[col_name].quantile(q1)
@@ -342,7 +338,7 @@ for col in num_cols:
     print(col, check_outlier(df, col))
 
 
-# Adım 6: Eksik gözlem analizi yapınız. / Check the missing values 
+# Check the missing values 
 
 def missing_values_table(dataframe, na_name=False): 
     na_columns = [col for col in dataframe.columns if dataframe[col].isnull().sum() > 0]
@@ -366,7 +362,7 @@ df.isnull().sum()
 # Silmek için etkilerini araştır (medyan ile değişim şiddetle öneriliyor)
 
 ##################################
-# BASE MODEL KURULUMU
+# BASE MODEL
 ##################################
 dff = df.copy()
 cat_cols = [col for col in cat_cols if col not in ["Churn"]]
@@ -400,7 +396,8 @@ print(f"Auc: {round(roc_auc_score(y_pred,y_test), 4)}")
 # Auc: 0.7372
 
 
-# Adım 7: Korelasyon analizi yapınız.
+# Correlation Analysis
+
 num_cols
 df[num_cols].corr()
 
@@ -437,10 +434,8 @@ df.corrwith(df["Churn"]).sort_values(ascending=False)
 
 
 #############################################
-# GÖREV 2: Özellik Mühendisliği / Feature Engineering
+# Feature Engineering
 #############################################
-# Adım 1: Yeni değişkenler oluşturunuz.
-
 # Tüm sütunları ve sınıfların unique değerlerini bir arada görmek adına;
 for column in df.columns:
     print(f"Column: {column} --> Unique Values: {df[column].unique()}")
@@ -567,7 +562,7 @@ for col in binary_cols:
 df.head()
 df.dtypes
 
-# Kategorik değilkenleri sayısallaştırdığımız için bi daha korelasyon inceleyebiliriz.
+# Kategorik değilkenleri sayısallaştırdığımız için bir daha korelasyon inceleyebiliriz.
 
 def heatMap(df):
     #Create Correlation df
@@ -601,14 +596,15 @@ df.head()
 df.dtypes
 
 
-# Adım 4: Numerik değişkenler için standartlaştırma yapınız.
+# Scale
+
 ss = StandardScaler()
 df[num_cols] = ss.fit_transform(df[num_cols])
 df.head()
 df.dtypes
 
 
-# Adım 5: Model oluşturunuz.
+# Final Model
 # Model oluşturma esnasında datasetin orijinal hali ile base bir model oluşturmak gerekmektedir. Karşılaştırma açısından
 
 
